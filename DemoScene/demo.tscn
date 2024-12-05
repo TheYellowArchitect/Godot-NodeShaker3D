@@ -61,7 +61,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2, 3)
 
 [node name="Cube" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, -6.65242e-06, 6.0559e-05, 6.653e-06, 1, -9.59318e-06, -6.05589e-05, 9.59358e-06, 1, 0.000258952, 1.00009, -1.31479e-05)
 mesh = SubResource("BoxMesh_kcral")
 
 [node name="NodeShaker3D" type="Node3D" parent="." node_paths=PackedStringArray("target")]
@@ -69,7 +69,6 @@ script = ExtResource("1_2jt11")
 target = NodePath("../Cube")
 recovery_speed = 2.0
 frequency = 25.0
-rotational_scaler = Vector3(0.2, 1, 0.2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

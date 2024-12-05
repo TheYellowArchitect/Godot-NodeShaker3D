@@ -13,26 +13,22 @@ class_name NodeShaker3D
 	set(value):
 		shake_once = false
 		induce_stress()
-@export var recovery_speed : float = 1.5
+@export_range(0.1,5) var recovery_speed : float = 1.5
 @export var frequency : float = 8.0
 @export var trauma_exponent : float = 2.0
 @export var positional_scaler : Vector3 =  Vector3(0.5,0.5,0.2)
 @export var rotational_scaler : Vector3 = Vector3(0.5,0.5,0.2)
 @onready var noise : FastNoiseLite = FastNoiseLite.new()
+
 var inital_position : Vector3 = Vector3.ZERO
 var inital_rotation : Vector3 = Vector3.ZERO
-
 var trauma : float = 0.0
 var shake : float = 0.0
 
 func _ready() -> void:
-	
 	randomize()
 	noise.seed = randi_range(0,1000)
 	noise.frequency = 0.2
-	if not Engine.is_editor_hint():
-		inital_position = target.position
-		inital_rotation = target.rotation
 
 func induce_stress(stress : float = 1.0) -> void:
 	trauma += stress
@@ -41,6 +37,9 @@ func induce_stress(stress : float = 1.0) -> void:
 func _process(delta: float) -> void:
 	
 	shake = pow(trauma,trauma_exponent)
+	
+	if trauma <= 0:
+		return
 	
 	## Handle Translational shake
 	var positional_shake : Vector3 = Vector3(
@@ -60,4 +59,3 @@ func _process(delta: float) -> void:
 	
 	trauma -= recovery_speed * delta
 	trauma = clampf(trauma,0.0,1.0)
-	
